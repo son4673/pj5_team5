@@ -211,15 +211,15 @@ int GamePlay()
 // DrawGameScreen function definition - 게임 스크린을 그리는 함수
 void DrawGameScreen()
 {
-	int i = 0; // Set int i 
+	int i = 0; 
 
-			   //Design Game Main outline character string 'l' 
+	
 
 	for (i = 1; i <= GS_HEIGHT - 1; i++) {
-		gotoxy(1, i); //Left outline 
+		gotoxy(1, i); 
 		putchar('|');
 
-		gotoxy(GS_WIDTH, i); //Right outline 
+		gotoxy(GS_WIDTH, i); 
 		putchar('|');
 	} // for
 }
@@ -227,11 +227,11 @@ void DrawGameScreen()
 // DrawStatus function definition - Status를 그리는 함수
 void DrawStatus(int life)
 {
-	//print "Score"
+	
 	gotoxy(GS_WIDTH + 3, 3);
 	printf("SCORE");
 
-	// print "ranking 1,2,3th"
+	
 	gotoxy(GS_WIDTH + 3, 7);
 	printf("Ranking");
 	gotoxy(GS_WIDTH + 4, 8);
@@ -241,26 +241,26 @@ void DrawStatus(int life)
 	gotoxy(GS_WIDTH + 4, 10);
 	printf("3. %s %d", third_name, third_score);
 
-	// print bomb's number
+	
 	gotoxy(GS_WIDTH + 3, 12);
 	printf("Bomb:");
 	gotoxy(GS_WIDTH + 2, 13);
 
-	//bomb is 3 times
+	
 	if (bomb == 3) {
 		printf("                  ");
 		gotoxy(GS_WIDTH + 2, 13);
 		printf("BOMB BOMB BOMB");
 	}
 
-	// bomb is 2 times
+	
 	else if (bomb == 2) {
 		printf("                 ");
 		gotoxy(GS_WIDTH + 2, 13);
 		printf("BOMB BOMB");
 	}
 
-	// bomb is 1 times
+	
 
 	else if (bomb == 1) {
 		printf("              ");
@@ -268,31 +268,31 @@ void DrawStatus(int life)
 		printf("BOMB");
 	}
 
-	//bomb is 0
+	
 	else if (bomb == 0)
 		printf("                  ");
 
-	// print Life's number
+	
 	gotoxy(GS_WIDTH + 3, 17);
 	printf("Life:");
 	gotoxy(GS_WIDTH + 2, 18);
 
-	// life is 2 times 
+	
 	if (life == 3)
-		printf("<-A-> <-A->"); // 1 life is used for fighter
+		printf("<-A-> <-A->"); 
 
-							   //life is 1 times
+							   
 	else if (life == 2) {
 		printf("           ");
 		gotoxy(GS_WIDTH + 2, 18);
 		printf("<-A->");
 	}
 
-	// life is 0 times 
+	
 	else if (life == 1)
 		printf("           ");
 
-	// print "Game's Right Holder"
+	
 	gotoxy(GS_WIDTH + 5, 22);
 	printf("Made by");
 	gotoxy(GS_WIDTH + 2, 23);
@@ -367,7 +367,7 @@ int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int ene
 // CheckStage function definition - 해당 점수가 되면 스테이지가 올라가고 그에 따른 스피드 변경하는 함수
 void CheckStage()
 {
-	//score는 제거한 enemy의 수. (게임 실행 화면의 score(== realscore)가 아님)
+	
 	if (score>10)
 		stage = 2;
 	if (score>30)
@@ -430,81 +430,81 @@ void clrscr_center()
 	}
 }
 
-// WriteRanking function definition - 랭킹을 계산해 파일에 쓰는 함수
+
 void WriteRanking(realscore)
 {
-	FILE *rank = NULL;				// FILE형 포인트 변수인 rank 선언
+	FILE *rank = NULL;				
 
-	int i = 0;						// 파일 기록 조건 확인을 위한 변수
+	int i = 0;						
 
-									// 3등 결정 ( 점수가 기존 3등 점수보다 큰 경우와 동시에 2등 점수보다 작은 경우 )
+									
 	if (realscore>third_score && realscore<second_score) {
 
 		clrscr();
 		gotoxy(1, 1);
 
-		third_score = realscore;		// 점수가 3등의 점수로 저장 됨
+		third_score = realscore;		
 
 		printf("3등을 기록하셨습니다! 축하드립니다.\n");
 		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
 		scanf("%s", third_name);
 
-		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 0 ->1 )
+		i = 1;						
 	}
 
-	// 2등 결정 ( 점수가 기존 2등 점수보다 큰 경우와 동시에 1등 점수보다 작은 경우 )
+	
 	else if (realscore>second_score && realscore<first_score) {
 
 		clrscr();
 		gotoxy(1, 1);
 
-		// 현재 점수 -> 2등 , 기존 2등 -> 3등
-		// 기존 3등의 이름을 기존 2등의 이름으로 변경
+		
+		
 		for (i = 0; i<3; i++)
 			third_name[3] = second_name[3];
 
-		third_score = second_score;	// 3등의 점수를 기존 2등의 점수로 변경
-		second_score = realscore;		// 점수가 2등의 점수로 저장 됨
+		third_score = second_score;	
+		second_score = realscore;		
 
 		printf("2등을 기록하셨습니다! 축하드립니다.\n");
 		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
 		scanf("%s", second_name);
 
-		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 3 ->1 )
+		i = 1;						
 	}
 
-	// 1등 결정 ( 점수가 기존 1등 점수보다 큰 경우)
+	
 	else if (realscore>first_score) {
 
 		clrscr();
 		gotoxy(1, 1);
 
-		// 현재 점수 -> 1등, 기존 1등 -> 2등, 기존 2등 -> 3등
-		// 기존 2등(3등)의 이름을 기존 1등(2등)의 이름으로 변경
+		
+		
 		for (i = 0; i<3; i++) {
 
 			third_name[i] = second_name[i];
 			second_name[i] = first_name[i];
 		}
 
-		third_score = second_score;	// 3등의 점수를 기존 2등의 점수로 변경
-		second_score = first_score;	// 2등의 점수를 기존 1등의 점수로 변경
-		first_score = realscore;		// 점수가 1등의 점수로 저장 됨
+		third_score = second_score;	
+		second_score = first_score;	
+		first_score = realscore;		
 
 		printf("1등을 기록하셨습니다! 축하드립니다.\n");
 		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
 		scanf("%s", first_name);
 
-		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 0 ->1 )
+		i = 1;						
 	}
 
-	// 랭킹 파일에 데이터 기록
-	if (i == 1) {						// i==0 인 경우는 랭킹에 들지 못한 경우이므로 기록을 하지 않음
+	
+	if (i == 1) {						
 
 		if ((rank = fopen("1945rk.dat", "w")) == NULL)
 			printf("Error to open ranking file!");
 
-		// 이름과 점수 데이터를 rank가 지칭하는 파일에 출력(저장)
+		
 		fprintf(rank, "%s %d ", first_name, first_score);
 		fprintf(rank, "%s %d ", second_name, second_score);
 		fprintf(rank, "%s %d ", third_name, third_score);
