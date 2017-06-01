@@ -74,25 +74,24 @@ int main()
 	return 0;
 }
 
-/* 파일로부터 랭킹 데이터를 불러오기 */
 void CountRanking()
 {
-	int i = 0;					// 반복문 조건을 위한 변수
+	int i = 0;					
 
-	FILE *rank = NULL;			// FILE형 포인트 변수인 rank 선언
+	FILE *rank = NULL;			
 
 	while (i == 0) {
 
-		rank = fopen("1945rk.dat", "r");		// 읽기 모드로 스트림을 형성
+		rank = fopen("1945rk.dat", "r");		
 
-		if (rank != NULL)			// 파일의 rank변수 주소 값이 반환 된 경우 => 파일 존재
+		if (rank != NULL)			
 			i = 1;
 
-		else if (rank == NULL) {	// NULL이 반환 된 경우 => 파일 존재 X
+		else if (rank == NULL) {	
 
-			clrscr();			// 화면 지우기
-			DrawBoundary();		// 화면에 외곽선 그리기
-			DrawLogo();			// 화면에 로고 그리기
+			clrscr();			
+			DrawBoundary();		
+			DrawLogo();			
 
 			gotoxy(5, 5);
 			printf("Error to open file!\n");
@@ -101,16 +100,15 @@ void CountRanking()
 			gotoxy(5, 7);
 			system("PAUSE");
 
-			rank = fopen("1945rk.dat", "w");	// 파일을 생성하여 쓰기 모드로 스트림을 형성
-			fprintf(rank, "COa 500 ");		// 문자열이 첫 번째 인자(rank)가 가리키는 파일에 저장 됨
+			rank = fopen("1945rk.dat", "w");	
+			fprintf(rank, "COa 500 ");		
 			fprintf(rank, "COb 200 ");
 			fprintf(rank, "COc 100 ");
 
-			fclose(rank);		// 스트림의 종료
+			fclose(rank);	
 		}
 	}
 
-	// 저장된 데이터를 동일한 서식 지정하여 읽어 들이기
 	fscanf(rank, "%s", first_name);
 	fscanf(rank, "%d", &first_score);
 	fscanf(rank, "%s", second_name);
