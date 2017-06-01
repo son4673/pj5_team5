@@ -364,10 +364,10 @@ int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int ene
 	return 0;
 }
 
-// CheckStage function definition - 해당 점수가 되면 스테이지가 올라가고 그에 따른 스피드 변경하는 함수
+/* 단계(stage) 및 속도 조정 */
 void CheckStage()
 {
-	
+	//score는 제거한 enemy의 수. (게임 실행 화면의 score(== realscore)가 아님)
 	if (score>10)
 		stage = 2;
 	if (score>30)
@@ -430,81 +430,80 @@ void clrscr_center()
 	}
 }
 
-
+/* 점수를 기존 1, 2, 3 등과 비교하여 파일에 기록 */
 void WriteRanking(realscore)
 {
-	FILE *rank = NULL;				
+	FILE *rank = NULL;				// FILE형 포인트 변수인 rank 선언
 
-	int i = 0;						
+	int i = 0;						// 파일 기록 조건 확인을 위한 변수
 
-									
+									// 3등 결정 ( 점수가 기존 3등 점수보다 큰 경우와 동시에 2등 점수보다 작은 경우 )
 	if (realscore>third_score && realscore<second_score) {
 
 		clrscr();
 		gotoxy(1, 1);
 
-		third_score = realscore;		
+		third_score = realscore;		// 점수가 3등의 점수로 저장 됨
 
 		printf("3등을 기록하셨습니다! 축하드립니다.\n");
 		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
 		scanf("%s", third_name);
 
-		i = 1;						
+		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 0 ->1 )
 	}
 
-	
+	// 2등 결정 ( 점수가 기존 2등 점수보다 큰 경우와 동시에 1등 점수보다 작은 경우 )
 	else if (realscore>second_score && realscore<first_score) {
 
 		clrscr();
 		gotoxy(1, 1);
 
-		
-		
+		// 현재 점수 -> 2등 , 기존 2등 -> 3등
+		// 기존 3등의 이름을 기존 2등의 이름으로 변경
 		for (i = 0; i<3; i++)
 			third_name[3] = second_name[3];
 
-		third_score = second_score;	
-		second_score = realscore;		
+		third_score = second_score;	// 3등의 점수를 기존 2등의 점수로 변경
+		second_score = realscore;		// 점수가 2등의 점수로 저장 됨
 
 		printf("2등을 기록하셨습니다! 축하드립니다.\n");
 		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
 		scanf("%s", second_name);
 
-		i = 1;						
+		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 3 ->1 )
 	}
 
-	
+	// 1등 결정 ( 점수가 기존 1등 점수보다 큰 경우)
 	else if (realscore>first_score) {
 
 		clrscr();
 		gotoxy(1, 1);
 
-		
-		
+		// 현재 점수 -> 1등, 기존 1등 -> 2등, 기존 2등 -> 3등
+		// 기존 2등(3등)의 이름을 기존 1등(2등)의 이름으로 변경
 		for (i = 0; i<3; i++) {
-
 			third_name[i] = second_name[i];
 			second_name[i] = first_name[i];
 		}
 
-		third_score = second_score;	
-		second_score = first_score;	
-		first_score = realscore;		
+		third_score = second_score;	// 3등의 점수를 기존 2등의 점수로 변경
+		second_score = first_score;	// 2등의 점수를 기존 1등의 점수로 변경
+		first_score = realscore;		// 점수가 1등의 점수로 저장 됨
 
 		printf("1등을 기록하셨습니다! 축하드립니다.\n");
 		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
 		scanf("%s", first_name);
 
-		i = 1;						
+		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 0 ->1 )
 	}
 
-	
-	if (i == 1) {						
+	// 랭킹 파일에 데이터 기록
+	if (i == 1) {						// i==0 인 경우는 랭킹에 들지 못한 경우이므로 기록을 하지 않음
 
 		if ((rank = fopen("1945rk.dat", "w")) == NULL)
 			printf("Error to open ranking file!");
 
-		
+		// 이름과 점수 데이터를 rank가 지칭하는 파일에 출력(저장)
 		fprintf(rank, "%s %d ", first_name, first_score);
 		fprintf(rank, "%s %d ", second_name, second_score);
 		fprintf(rank, "%s %d ", third_name, third_score);

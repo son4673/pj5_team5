@@ -1,22 +1,22 @@
 /*
-1ì°¨ ê°œë°œ
+1Â÷ °³¹ß
 
-20700486 ì´ì„±í˜„
+20700486 ÀÌ¼ºÇö
 
 Term-Project: STRIKERS 1945
 
 Visual C++
 */
 /*
-2ì°¨ ê°œë°œ
+2Â÷ °³¹ß
 
 main.c/Console.c/game_play.c/notgame.c
 
-Team-Project : ì˜¤í”ˆì†ŒìŠ¤SWê°œë¡ 
+Team-Project : ¿ÀÇÂ¼Ò½ºSW°³·Ğ
 
 Created by OSS_TEAM5 on 2017. 6.
 
-Copyright Â© 2017. 5. OSS_TEAM5. All rights reserved.
+Copyright @ 2017. 5. OSS_TEAM5. All rights reserved.
 
 Visual C++
 
@@ -28,26 +28,25 @@ Visual C++
 #include "Console.h"
 
 // Global Variables Declaration
-char selection = 0; // ë©”ë‰´ ì„ íƒ ë³€ìˆ˜
+char selection = 0; // ¸Ş´º ¼±ÅÃ º¯¼ö
 char first_name[3];
 char second_name[3];
-char third_name[3]; // ë­í‚¹ì˜ 1, 2, 3ë“±ì˜ ì´ë¦„
+char third_name[3]; // ·©Å·ÀÇ 1, 2, 3µîÀÇ ÀÌ¸§
 int first_score;
 int second_score;
-int third_score; // ë­í‚¹ì˜ 1, 2, 3ë“±ì˜ ì ìˆ˜
+int third_score; // ·©Å·ÀÇ 1, 2, 3µîÀÇ Á¡¼ö
 
 				 // Functions Declaration
-int StartMenu(char selection); // ë©”ì¸ ë©”ë‰´
+int StartMenu(char selection); // ¸ŞÀÎ ¸Ş´º
 void ViewRanking();
 int GamePlay();
 void HelpScreen();
-<<<<<<< HEAD
-void ExitGame(); // ê²Œì„ ì¢…ë£Œ ì—­í•  ìˆ˜í–‰
+void ExitGame(); // °ÔÀÓ Á¾·á ¿ªÇÒ ¼öÇà
 
-				 //ê²½ê³„ì™€ ë¡œê³  ê·¸ë¦¬ê¸°
+				 //°æ°è¿Í ·Î°í ±×¸®±â
 void DrawBoundary();
 void DrawLogo();
-void CountRanking(); // ë­í‚¹ì„ íŒŒì¼ë¡œë¶€í„° ë¶ˆëŸ¬ì˜¤ëŠ” ì—­í•  ìˆ˜í–‰
+void CountRanking(); // ·©Å·À» ÆÄÀÏ·ÎºÎÅÍ ºÒ·¯¿À´Â ¿ªÇÒ ¼öÇà
 
 					 // main function
 int main()
@@ -59,16 +58,16 @@ int main()
 
 		selection = StartMenu(selection);
 		switch (selection) {
-		case '1': // ê²Œì„ ì‹œì‘
+		case '1': // °ÔÀÓ ½ÃÀÛ
 			GamePlay();
 			return 0;
-		case '2': // Ranking í™•ì¸
+		case '2': // Ranking È®ÀÎ
 			ViewRanking();
 			break;
-		case '3': // ë„ì›€ë§
+		case '3': // µµ¿ò¸»
 			HelpScreen();
 			break;
-		case '4': // ê²Œì„ ì¢…ë£Œ
+		case '4': // °ÔÀÓ Á¾·á
 			ExitGame();
 			system("PAUSE");
 			return 0;
@@ -78,37 +77,43 @@ int main()
 	return 0;
 }
 
-void CountRanking() 
+/* ÆÄÀÏ·ÎºÎÅÍ ·©Å· µ¥ÀÌÅÍ¸¦ ºÒ·¯¿À±â */
+void CountRanking()
 {
-	int i = 0;
-	FILE *rank = NULL;
+	int i = 0;					// ¹İº¹¹® Á¶°ÇÀ» À§ÇÑ º¯¼ö
+
+	FILE *rank = NULL;			// FILEÇü Æ÷ÀÎÆ® º¯¼öÀÎ rank ¼±¾ğ
+
 	while (i == 0) {
-		rank = fopen("1945rk.dat", "r");
-		if (rank != NULL) 
+
+		rank = fopen("1945rk.dat", "r");		// ÀĞ±â ¸ğµå·Î ½ºÆ®¸²À» Çü¼º
+
+		if (rank != NULL)			// ÆÄÀÏÀÇ rankº¯¼ö ÁÖ¼Ò °ªÀÌ ¹İÈ¯ µÈ °æ¿ì => ÆÄÀÏ Á¸Àç
 			i = 1;
-		else if (rank == NULL) { 
 
-			clrscr();
+		else if (rank == NULL) {	// NULLÀÌ ¹İÈ¯ µÈ °æ¿ì => ÆÄÀÏ Á¸Àç X
 
-			DrawBoundary();
-			DrawLogo();
+			clrscr();			// È­¸é Áö¿ì±â
+			DrawBoundary();		// È­¸é¿¡ ¿Ü°û¼± ±×¸®±â
+			DrawLogo();			// È­¸é¿¡ ·Î°í ±×¸®±â
 
 			gotoxy(5, 5);
 			printf("Error to open file!\n");
 			gotoxy(5, 6);
-			printf("File open error! ë­í‚¹íŒŒì¼ì„ ìƒˆë¡œ ì‘ì„±í•©ë‹ˆë‹¤.");
+			printf("File open error! ·©Å·ÆÄÀÏÀ» »õ·Î ÀÛ¼ºÇÕ´Ï´Ù.");
 			gotoxy(5, 7);
 			system("PAUSE");
 
-			rank = fopen("1945rk.dat", "w");	
-			fprintf(rank, "COa 500 ");		
+			rank = fopen("1945rk.dat", "w");	// ÆÄÀÏÀ» »ı¼ºÇÏ¿© ¾²±â ¸ğµå·Î ½ºÆ®¸²À» Çü¼º
+			fprintf(rank, "COa 500 ");		// ¹®ÀÚ¿­ÀÌ Ã¹ ¹øÂ° ÀÎÀÚ(rank)°¡ °¡¸®Å°´Â ÆÄÀÏ¿¡ ÀúÀå µÊ
 			fprintf(rank, "COb 200 ");
 			fprintf(rank, "COc 100 ");
 
-			fclose(rank);	
+			fclose(rank);		// ½ºÆ®¸²ÀÇ Á¾·á
 		}
 	}
 
+	// ÀúÀåµÈ µ¥ÀÌÅÍ¸¦ µ¿ÀÏÇÑ ¼­½Ä ÁöÁ¤ÇÏ¿© ÀĞ¾î µéÀÌ±â
 	fscanf(rank, "%s", first_name);
 	fscanf(rank, "%d", &first_score);
 	fscanf(rank, "%s", second_name);
@@ -126,18 +131,18 @@ int StartMenu(char selection) // Menu
 		DrawBoundary();
 		DrawLogo();
 		gotoxy(10, 5);
-		printf("1. ê²Œì„ ì‹œì‘");
+		printf("1. °ÔÀÓ ½ÃÀÛ");
 		gotoxy(10, 8);
-		printf("2. Ranking í™•ì¸");
+		printf("2. Ranking È®ÀÎ");
 		gotoxy(10, 11);
-		printf("3. ë„ì›€ë§");
+		printf("3. µµ¿ò¸»");
 		gotoxy(10, 14);
-		printf("4. ê²Œì„ ì¢…ë£Œ");
+		printf("4. °ÔÀÓ Á¾·á");
 		gotoxy(10, 20);
-		printf(" ë²ˆí˜¸ ì…ë ¥: ");
+		printf(" ¹øÈ£ ÀÔ·Â: ");
 		selection = getch();
 		if (selection != '1'&&selection != '2'&&selection != '3'&&selection != '4') {
-			printf("#    ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.\n");
+			printf("#    Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä. \n");
 			printf("#    ");
 			system("PAUSE");
 		} // if
