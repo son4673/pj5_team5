@@ -1,6 +1,27 @@
-/* 20700486 ÀÌ¼ºÇö
-   Term-Project: STRIKERS 1945
-   Visual C++ */
+ï»¿/*
+
+1ì°¨ ê°œë°œ
+
+20700486 ì´ì„±í˜„
+
+Term-Project: STRIKERS 1945
+
+Visual C++
+
+
+2ì°¨ ê°œë°œ
+
+main.c/Console.c/game_play.c/notgame.c
+
+Team-Project : ì˜¤í”ˆì†ŒìŠ¤SWê°œë¡ 
+
+Created by OSS_TEAM5 on 2017. 6.
+
+Copyright Â© 2017. 5. OSS_TEAM5. All rights reserved.
+
+Visual C++
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,41 +30,41 @@
 #include "Console.h"
 
 // Global Variables Declaration
-char selection=0; // ¸Ş´º ¼±ÅÃ º¯¼ö
+char selection = 0; // ë©”ë‰´ ì„ íƒ ë³€ìˆ˜
 char first_name[3];
 char second_name[3];
-char third_name[3]; // ·©Å·ÀÇ 1, 2, 3µîÀÇ ÀÌ¸§
+char third_name[3]; // ë­í‚¹ì˜ 1, 2, 3ë“±ì˜ ì´ë¦„
 int first_score;
 int second_score;
-int third_score; // ·©Å·ÀÇ 1, 2, 3µîÀÇ Á¡¼ö
+int third_score; // ë­í‚¹ì˜ 1, 2, 3ë“±ì˜ ì ìˆ˜
 
-// Functions Declaration
-int StartMenu(char selection); // ¸ŞÀÎ ¸Ş´º
+				 // Functions Declaration
+int StartMenu(char selection); // ë©”ì¸ ë©”ë‰´
 void ViewRanking();
 int GamePlay();
 void HelpScreen();
-void ExitGame();
-void DrawBoundary();
-void DrawLogo();
-void CountRanking(); // ·©Å·À» ÆÄÀÏ·ÎºÎÅÍ ºÒ·¯¿À´Â ¿ªÇÒ ¼öÇà
+void ExitGame(); // ê²Œì„ ì¢…ë£Œ ì—­í•  ìˆ˜í–‰
+void DrawBoundary(); // ê²½ê³„ë¥¼ ê·¸ë¦¬ëŠ” ì—­í•  ìˆ˜í–‰
+void DrawLogo(); // ë¡œê³  ë‚˜íƒ€ë‚´ëŠ” ì—­í•  ìˆ˜í–‰
+void CountRanking(); // ë­í‚¹ì„ íŒŒì¼ë¡œë¶€í„° ë¶ˆëŸ¬ì˜¤ëŠ” ì—­í•  ìˆ˜í–‰
 
-// main function
+					 // main function
 int main()
 {
 	CountRanking();
-	while(1){
-		selection=StartMenu(selection);
-		switch(selection){
-		case '1': // °ÔÀÓ ½ÃÀÛ
+	while (1) {
+		selection = StartMenu(selection);
+		switch (selection) {
+		case '1': // ê²Œì„ ì‹œì‘
 			GamePlay();
 			return 0;
-		case '2': // Ranking È®ÀÎ
+		case '2': // Ranking í™•ì¸
 			ViewRanking();
 			break;
-		case '3': // µµ¿ò¸»
+		case '3': // ë„ì›€ë§
 			HelpScreen();
 			break;
-		case '4': // °ÔÀÓ Á¾·á
+		case '4': // ê²Œì„ ì¢…ë£Œ
 			ExitGame();
 			system("PAUSE");
 			return 0;
@@ -52,68 +73,76 @@ int main()
 	} // while
 	return 0;
 }
-void CountRanking() // ·©Å·À» ÆÄÀÏ·ÎºÎÅÍ ºÒ·¯¿À´Â ÇÔ¼ö
+
+/* íŒŒì¼ë¡œë¶€í„° ë­í‚¹ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¤ê¸° */
+void CountRanking()
 {
-	int i=0;
-	FILE *rank=NULL;
-	while(i==0){
-		rank=fopen("1945rk.dat", "r");
-		if(rank!=NULL) // ÆÄÀÏÀÌ Á¸ÀçÇÑ´Ù
-			i=1;
-		else if(rank==NULL){ // ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê°Å³ª ¿¡·¯°¡ ÀÖ´Ù
-			
-			clrscr();
+	int i = 0;					// ë°˜ë³µë¬¸ ì¡°ê±´ì„ ìœ„í•œ ë³€ìˆ˜
 
-			DrawBoundary();
-			DrawLogo();
+	FILE *rank = NULL;			// FILEí˜• í¬ì¸íŠ¸ ë³€ìˆ˜ì¸ rank ì„ ì–¸
 
-			gotoxy(5,5);
+	while (i == 0) {
+
+		rank = fopen("1945rk.dat", "r");		// ì½ê¸° ëª¨ë“œë¡œ ìŠ¤íŠ¸ë¦¼ì„ í˜•ì„±
+
+		if (rank != NULL)			// íŒŒì¼ì˜ rankë³€ìˆ˜ ì£¼ì†Œ ê°’ì´ ë°˜í™˜ ëœ ê²½ìš° => íŒŒì¼ ì¡´ì¬
+			i = 1;
+
+		else if (rank == NULL) {	// NULLì´ ë°˜í™˜ ëœ ê²½ìš° => íŒŒì¼ ì¡´ì¬ X
+
+			clrscr();			// í™”ë©´ ì§€ìš°ê¸°
+			DrawBoundary();		// í™”ë©´ì— ì™¸ê³½ì„  ê·¸ë¦¬ê¸°
+			DrawLogo();			// í™”ë©´ì— ë¡œê³  ê·¸ë¦¬ê¸°
+
+			gotoxy(5, 5);
 			printf("Error to open file!\n");
-			gotoxy(5,6);
-			printf("File open error! ·©Å·ÆÄÀÏÀ» »õ·Î ÀÛ¼ºÇÕ´Ï´Ù.");
-			gotoxy(5,7);
+			gotoxy(5, 6);
+			printf("File open error! ë­í‚¹íŒŒì¼ì„ ìƒˆë¡œ ì‘ì„±í•©ë‹ˆë‹¤.");
+			gotoxy(5, 7);
 			system("PAUSE");
-		
-			// ·©Å· ÆÄÀÏ ÀÛ¼º
-			rank=fopen("1945rk.dat", "w");
-			fprintf(rank, "COa 500 ");
+
+			rank = fopen("1945rk.dat", "w");	// íŒŒì¼ì„ ìƒì„±í•˜ì—¬ ì“°ê¸° ëª¨ë“œë¡œ ìŠ¤íŠ¸ë¦¼ì„ í˜•ì„±
+			fprintf(rank, "COa 500 ");		// ë¬¸ìì—´ì´ ì²« ë²ˆì§¸ ì¸ì(rank)ê°€ ê°€ë¦¬í‚¤ëŠ” íŒŒì¼ì— ì €ì¥ ë¨
 			fprintf(rank, "COb 200 ");
 			fprintf(rank, "COc 100 ");
-		
-			fclose(rank);
-		} // else if
-	} // while
-	// ·©Å· ÆÄÀÏ¿¡ ÀÖ´Â µ¥ÀÌÅ¸µéÀ» ºÒ·¯¿À´Â ÇÔ¼ö
+
+			fclose(rank);		// ìŠ¤íŠ¸ë¦¼ì˜ ì¢…ë£Œ
+		}
+	}
+
+	// ì €ì¥ëœ ë°ì´í„°ë¥¼ ë™ì¼í•œ ì„œì‹ ì§€ì •í•˜ì—¬ ì½ì–´ ë“¤ì´ê¸°
 	fscanf(rank, "%s", first_name);
 	fscanf(rank, "%d", &first_score);
 	fscanf(rank, "%s", second_name);
 	fscanf(rank, "%d", &second_score);
 	fscanf(rank, "%s", third_name);
 	fscanf(rank, "%d", &third_score);
+
 	fclose(rank);
 }
+
 int StartMenu(char selection) // Menu
 {
-	do{
+	do {
 		clrscr();
 		DrawBoundary();
 		DrawLogo();
-		gotoxy(10,5);
-		printf("1. °ÔÀÓ ½ÃÀÛ");
-		gotoxy(10,8);
-		printf("2. Ranking È®ÀÎ");
-		gotoxy(10,11);
-		printf("3. µµ¿ò¸»");
-		gotoxy(10,14);
-		printf("4. °ÔÀÓ Á¾·á");
-		gotoxy(10,20);
-		printf(" ¹øÈ£ ÀÔ·Â: ");
-		selection=getch();
-		if(selection!='1'&&selection!='2'&&selection!='3'&&selection!='4'){
-			printf("#    Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.\n");
+		gotoxy(10, 5);
+		printf("1. ê²Œì„ ì‹œì‘");
+		gotoxy(10, 8);
+		printf("2. Ranking í™•ì¸");
+		gotoxy(10, 11);
+		printf("3. ë„ì›€ë§");
+		gotoxy(10, 14);
+		printf("4. ê²Œì„ ì¢…ë£Œ");
+		gotoxy(10, 20);
+		printf(" ë²ˆí˜¸ ì…ë ¥: ");
+		selection = getch();
+		if (selection != '1'&&selection != '2'&&selection != '3'&&selection != '4') {
+			printf("#    ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.\n");
 			printf("#    ");
 			system("PAUSE");
 		} // if
-	} while(selection!='1'&&selection!='2'&&selection!='3'&&selection!='4'); // while
+	} while (selection != '1'&&selection != '2'&&selection != '3'&&selection != '4'); // while
 	return selection;
 }
