@@ -1,21 +1,30 @@
-﻿//1차 개발
-/* 20700486 이성현
-Term-Project: STRIKERS 1945
-Visual C++ */
+/*
+1차 개발
 
-// 2차 개발
-//
-//  main.c/game_play.c/Consoe.c/notgame.c
-//  오픈소스SW개론
-//
-//  Created by OSS_TEAM5 on 2017. 6.
-//  Copyright © 2017년 OSS_TEAM5. All rights reserved.
-//
+20700486 이성현
+
+Term-Project: STRIKERS 1945
+
+Visual C++
+*/
+/*
+2차 개발
+
+main.c/Console.c/game_play.c/notgame.c
+
+Team-Project : 오픈소스SW개론
+
+Created by OSS_TEAM5 on 2017. 6.
+
+Copyright © 2017. 5. OSS_TEAM5. All rights reserved.
+
+Visual C++
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h> // for getch
-
 #include "Console.h"
 
 // Global Variables Declaration
@@ -32,25 +41,27 @@ int StartMenu(char selection); // 메인 메뉴
 void ViewRanking();
 int GamePlay();
 void HelpScreen();
-void ExitGame(); //게임 매뉴 선택지
+<<<<<<< HEAD
+void ExitGame(); // 게임 종료 역할 수행
 
 				 //경계와 로고 그리기
 void DrawBoundary();
 void DrawLogo();
-
 void CountRanking(); // 랭킹을 파일로부터 불러오는 역할 수행
 
 					 // main function
 int main()
 {
 	CountRanking();
+
 	while (1)
 	{
+
 		selection = StartMenu(selection);
 		switch (selection) {
 		case '1': // 게임 시작
 			GamePlay();
-			break;// 다시 메인화면으로 돌아오게끔 수정
+			return 0;
 		case '2': // Ranking 확인
 			ViewRanking();
 			break;
@@ -66,15 +77,16 @@ int main()
 	} // while
 	return 0;
 }
-void CountRanking() // 랭킹을 파일로부터 불러오는 함수
+
+void CountRanking() 
 {
 	int i = 0;
 	FILE *rank = NULL;
 	while (i == 0) {
 		rank = fopen("1945rk.dat", "r");
-		if (rank != NULL) // 파일이 존재한다
+		if (rank != NULL) 
 			i = 1;
-		else if (rank == NULL) { // 파일이 존재하지 않거나 에러가 있다
+		else if (rank == NULL) { 
 
 			clrscr();
 
@@ -88,24 +100,25 @@ void CountRanking() // 랭킹을 파일로부터 불러오는 함수
 			gotoxy(5, 7);
 			system("PAUSE");
 
-			// 랭킹 파일 작성
-			rank = fopen("1945rk.dat", "w");
-			fprintf(rank, "COa 500 ");
+			rank = fopen("1945rk.dat", "w");	
+			fprintf(rank, "COa 500 ");		
 			fprintf(rank, "COb 200 ");
 			fprintf(rank, "COc 100 ");
 
-			fclose(rank);
-		} // else if
-	} // while
-	  // 랭킹 파일에 있는 데이타들을 불러오는 함수
+			fclose(rank);	
+		}
+	}
+
 	fscanf(rank, "%s", first_name);
 	fscanf(rank, "%d", &first_score);
 	fscanf(rank, "%s", second_name);
 	fscanf(rank, "%d", &second_score);
 	fscanf(rank, "%s", third_name);
 	fscanf(rank, "%d", &third_score);
+
 	fclose(rank);
 }
+
 int StartMenu(char selection) // Menu
 {
 	do {
