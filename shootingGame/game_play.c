@@ -40,7 +40,7 @@ int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int ene
 void CheckStage();
 int CheckDie(int enemy_x[], int enemy_y[], int enemy_life[]);
 void clrscr_center();
-void WriteRanking(realscore);
+//void WriteRanking(realscore);
 int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[]);
 
 // global variable
@@ -267,7 +267,7 @@ void DrawStatus(int life)
 
 	//Life 3개 일때 남은 생명수 표시
 	if (life == 3)
-		printf("<-A-> <-A->");  /
+		printf("<-A-> <-A->");
 
 	//Life 2개 일때 남은 생명수 표시 						   
 	else if (life == 2) {
@@ -276,7 +276,6 @@ void DrawStatus(int life)
 		printf("<-A->");
 	}
 
-	
 	else if (life == 1)
 		printf("           ");
 
