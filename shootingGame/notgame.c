@@ -79,13 +79,18 @@ void ExitGame() // 게임 종료
 	printf("Made by Sung-Hyun, Lee\n\n");
 	printf("e-mail: caleb-@hanmail.net\n");
 }
-void ViewRanking() // 랭킹 보기
-{	
-	clrscr();
-	DrawBoundary();
-	DrawLogo();
+
+/* 1,2,3위 랭킹 출력 */
+void ViewRanking()
+{
+	clrscr();			// 화면 지우기
+	DrawBoundary();		// 화면에 외곽선 출력
+	DrawLogo();			// 화면에 로고 출력
+
 	gotoxy(5, 8);
 	printf("\tRANKING:");
+
+	// 화면에 이름과 점수를 출력
 	gotoxy(5, 10);
 	printf("  1. %s  %d", first_name, first_score);
 	gotoxy(5, 11);
