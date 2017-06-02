@@ -94,14 +94,15 @@ int GamePlay()
 		DrawStatus(life);
 		PrintStage(stage);
 		CountnDraw_Score(realscore);
-		if (height % (3 * (speed * 2)) == 0)
-			Enemy_Fighter(enemy_life, enemy_x);
-		if (height % (speed * 2) == 0)
+		if (height % (3 * (speed * 2)) == 0) // Enemy_Fighter 초기화
+			Enemy_Fighter(enemy_life, enemy_x); 
+		if (height % (speed * 2) == 0) //  EnemyFighter_Move 초기화
 			EnemyFighter_Move(enemy_x, enemy_y, enemy_life);
-		if ((height % 2000) == 0) {
-			if (bomb == 3)
+
+		if ((height % 2000) == 0) {// Enemy 생성 속도가 2000이 될때
+			if (bomb == 3) //Bomb이 3개 일시 그대로  
 				bomb = 3;
-			else
+			else //Bomb이 3개가 아닐때 폭탄 추가
 				bomb++;
 		} // if
 		if (x != oldx) {
@@ -214,7 +215,7 @@ void DrawGameScreen()
 	int i = 0; 
 
 	
-
+	//문자열 'ㅣ'로 게임 메인틀 만들기
 	for (i = 1; i <= GS_HEIGHT - 1; i++) {
 		gotoxy(1, i); 
 		putchar('|');
@@ -228,10 +229,11 @@ void DrawGameScreen()
 void DrawStatus(int life)
 {
 	
+	//Score 출력 
 	gotoxy(GS_WIDTH + 3, 3);
 	printf("SCORE");
 
-	
+	//Ranking,1등 2등 3등 이름과 점수 출력
 	gotoxy(GS_WIDTH + 3, 7);
 	printf("Ranking");
 	gotoxy(GS_WIDTH + 4, 8);
@@ -241,12 +243,13 @@ void DrawStatus(int life)
 	gotoxy(GS_WIDTH + 4, 10);
 	printf("3. %s %d", third_name, third_score);
 
-	
+	//Bomb 출력
 	gotoxy(GS_WIDTH + 3, 12);
 	printf("Bomb:");
 	gotoxy(GS_WIDTH + 2, 13);
 
 	
+	//Bomb이 3개 있을때 메인창에 출력
 	if (bomb == 3) {
 		printf("                  ");
 		gotoxy(GS_WIDTH + 2, 13);
@@ -254,6 +257,7 @@ void DrawStatus(int life)
 	}
 
 	
+	//Bomb이 2개 있을 때 메인창에 출력
 	else if (bomb == 2) {
 		printf("                 ");
 		gotoxy(GS_WIDTH + 2, 13);
@@ -261,27 +265,27 @@ void DrawStatus(int life)
 	}
 
 	
-
+	//Bomb이 1개 있을 때 메인창에 출력
 	else if (bomb == 1) {
 		printf("              ");
 		gotoxy(GS_WIDTH + 2, 13);
 		printf("BOMB");
 	}
 
-	
+	//Bomb이 0개 있을때 메인창에 출력
 	else if (bomb == 0)
 		printf("                  ");
 
-	
+	//Life 출력
 	gotoxy(GS_WIDTH + 3, 17);
 	printf("Life:");
 	gotoxy(GS_WIDTH + 2, 18);
 
-	
+	//Life 3개 일때 남은 생명수 표시
 	if (life == 3)
-		printf("<-A-> <-A->"); 
+		printf("<-A-> <-A->");  /
 
-							   
+	//Life 2개 일때 남은 생명수 표시 						   
 	else if (life == 2) {
 		printf("           ");
 		gotoxy(GS_WIDTH + 2, 18);
@@ -292,7 +296,7 @@ void DrawStatus(int life)
 	else if (life == 1)
 		printf("           ");
 
-	
+	//게임 저작권자 표시
 	gotoxy(GS_WIDTH + 5, 22);
 	printf("Made by");
 	gotoxy(GS_WIDTH + 2, 23);
@@ -302,6 +306,7 @@ void DrawStatus(int life)
 // PrintStage function definition - stage를 찍는 함수
 void PrintStage(int stage)
 {
+	//게임메인창에 STAGE 단계 표시
 	gotoxy(GS_WIDTH + 6, 19);
 	printf("STAGE %d", stage);
 }
@@ -309,6 +314,7 @@ void PrintStage(int stage)
 // CountnDraw_Score function definition - score를 찍는 함수
 void CountnDraw_Score(realscore)
 {
+	//게임메인창에 Fighter의 Score 표시
 	gotoxy(SCORE_X, SCORE_Y);
 	printf("%8d", realscore);
 }
@@ -333,11 +339,12 @@ void EnemyFighter_Move(int enemy_x[], int enemy_y[], int enemy_life[])
 {
 	int i;
 
+	
 	for (i = 0; i<NoEnemy; i++) {
-		if (enemy_life[i]) {
-			gotoxy(enemy_x[i], (enemy_y[i])++);
+		if (enemy_life[i]) { //조건- enemy의 life가 있으면
+			gotoxy(enemy_x[i], (enemy_y[i])++); //enemy 겹치지 않게 주변 공백처리 
 			printf("     ");
-			gotoxy(enemy_x[i], enemy_y[i]);
+			gotoxy(enemy_x[i], enemy_y[i]); //enemy 표시
 			printf("<-O->");
 		} // if
 	} // for
@@ -379,6 +386,7 @@ void CheckStage()
 	if (score>150)
 		stage = 6;
 
+	//speed는 enemy가 내려오는 속도에 영향을 줌.
 	if (stage == 2)
 		speed = 5;
 	if (stage == 3)
@@ -395,14 +403,14 @@ void CheckStage()
 int CheckDie(int enemy_x[], int enemy_y[], int enemy_life[])
 {
 	int i;
-	for (i = 0; i<NoEnemy; i++)
-		if (enemy_y[i] >= 24) {
+	for (i = 0; i<NoEnemy; i++) 
+		if (enemy_y[i] >= 24) { //조건- enemy가 fighter부분을 지나치게 되면
 			gotoxy(enemy_x[i], enemy_y[i]);
-			printf("     ");
-			enemy_life[i] = 0;
-			enemy_x[i] = 0;
+			printf("     "); //enemy 공백 표시 
+			enemy_life[i] = 0; //enemy life 초기화
+			enemy_x[i] = 0; //enemy 좌표 초기화 
 			enemy_y[i] = 0;
-			return 1;
+			return 1; //1리턴 후 종료
 		} // if
 	return 0;
 }
@@ -516,33 +524,46 @@ void WriteRanking(realscore)
 int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[])
 {
 	int i, j;
+
+	//폭탄이 0개일때 화면에 출력 후 일시정지
 	if (bomb == 0) {
 		gotoxy(GS_WIDTH + 2, 13);
 		printf("NO BOMB AVAILABLE!");
 		Sleep(100);
-	} // if
+	} // if 
 
+	//폭탄이 있을 경우 게임 모든 창에 미사일 출력 후 일시정지 
 	else {
+
+		//게임 세로창 
 		for (i = 1; i<GS_HEIGHT; i++) {
 			gotoxy(GS_WIDTH - 58, i);
 			putchar('*');
+
+			//게임 가로창
 			for (j = 2; j<GS_WIDTH; j++) {
 				gotoxy(j, i);
 				putchar('*');
-			} // for
-			Sleep(10);
+			} //for 
+			Sleep(10); 
 		} // for
-		Sleep(100);
-		score += enemy_draw;
+		Sleep(100); 
+		score += enemy_draw; // 폭탄 발사시 존재하는 enemy 수 만큼 점수 증가  
+		
+		// 폭탄발사 후 존재하는 enemy값 초기화 
 		for (i = 0; i<NoEnemy; i++) {
-			enemy_life[i] = 0;
+			enemy_life[i] = 0; // 
 			enemy_x[i] = 0;
 			enemy_y[i] = 0;
-		} // for
+		} 
+
+		// 폭탄 발사 후 존재하는 미사일 값 초기화 
 		for (i = 0; i<NoMissile; i++) {
 			missilex[i] = 0;
 			missiley[i] = 0;
-		} // for
+		} 
+
+		// 폭탄 발사 후 메인창 초기화
 		for (i = 1; i<GS_HEIGHT; i++) {
 			gotoxy(GS_WIDTH - 58, i);
 			putchar(' ');
@@ -552,7 +573,11 @@ int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int mis
 			} // for
 			Sleep(10);
 		} // for
+
+		// enemy 수 초기화
 		enemy_draw = 0;
+
+		//폭탄 개수 줄이기
 		bomb--;
 	} // else
 	return 0;
