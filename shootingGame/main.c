@@ -29,16 +29,9 @@ Visual C++
 
 // Global Variables Declaration
 char selection = 0; // 메뉴 선택 변수
-char first_name[3];
-char second_name[3];
-char third_name[3]; // 랭킹의 1, 2, 3등의 이름
-int first_score;
-int second_score;
-int third_score; // 랭킹의 1, 2, 3등의 점수
 
 				 // Functions Declaration
 int StartMenu(char selection); // 메인 메뉴
-void ViewRanking();
 int GamePlay();
 void HelpScreen();
 void ExitGame(); // 게임 종료 역할 수행
@@ -62,8 +55,8 @@ int main()
 			GamePlay();
 			return 0;
 		case '2': // Ranking 확인
-			ViewRanking();
-			break;
+			//ViewRanking();
+			//break;
 		case '3': // 도움말
 			HelpScreen();
 			break;
