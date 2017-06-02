@@ -195,7 +195,7 @@ int GamePlay()
 			} // else if
 		} // if
 	} while (c != 27);
-	WriteRanking(realscore);
+	//WriteRanking(realscore);
 	clrscr_center();
 	gotoxy(1, 1);
 	printf("Thank you for playing!!\n");
