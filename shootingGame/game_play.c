@@ -448,7 +448,7 @@ int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int mis
 			} //for 
 			Sleep(10); 
 		} // for
-		Sleep(100); 
+		Sleep(50); 
 		score += enemy_draw; // 폭탄 발사시 존재하는 enemy 수 만큼 점수 증가  
 		
 		// 폭탄발사 후 존재하는 enemy값 초기화 
