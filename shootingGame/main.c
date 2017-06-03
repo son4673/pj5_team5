@@ -52,7 +52,7 @@ int main()
 		switch (selection) {
 		case '1': // 게임 시작
 			GamePlay();
-			return 0;
+			break;
 		case '2': // Ranking 확인
 			ViewRanking();
 			break;
