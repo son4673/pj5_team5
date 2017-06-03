@@ -40,7 +40,6 @@ int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int ene
 void CheckStage();
 int CheckDie(int enemy_x[], int enemy_y[], int enemy_life[]);
 void clrscr_center();
-//void WriteRanking(realscore);
 int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[]);
 
 // global variable
@@ -195,7 +194,7 @@ int GamePlay()
 			} // else if
 		} // if
 	} while (c != 27);
-	//WriteRanking(realscore);
+	WriteRank(realscore);
 	clrscr_center();
 	gotoxy(1, 1);
 	printf("Thank you for playing!!\n");

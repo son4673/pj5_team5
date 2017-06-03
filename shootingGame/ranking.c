@@ -135,7 +135,7 @@ void RankDetailDraw()
 }
 
 /* ·©Å· ±×¸®±â */
-void RankDraw(void)
+void ViewRanking(void)
 {
 	clrscr();
 	RankLoad();
