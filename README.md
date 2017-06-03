@@ -48,11 +48,12 @@ visual studio 2015/2010에서 실행을 시켜야합니다.
  
 ## 라이선스
  
-이 프로젝트는 Apache License 2.0에 따라 라이선스가 부여됩니다. 자세한 내용은 [LICENSE.md](LICENSE.md)를 참조하십시오.
+이 프로젝트는 Apache License 2.0에 따라 라이선스가 부여됩니다. 자세한 내용은 [LICENSE.md](https://github.com/son4673/pj5_team5/blob/master/LICENSE)를 참조하십시오.
  
 ## 참조 및 도움을 주신 분들.
  
 * MoonJeong Jang [cathmjjang](https://github.com/cathmjjang)
+*  [게임 공략](https://github.com/son4673/pj5_team5/wiki)
 * [질문](https://github.com/son4673/pj5_team5/issues/6)을 올려주세요.
 
  
@@ -106,9 +107,10 @@ We use Git of Distributed Version Control System.
  
 ## License
  
-This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache License 2.0 - see the [LICENSE.md](https://github.com/son4673/pj5_team5/blob/master/LICENSE) file for details
  
 ## Acknowledgments & Thanks
  
 * MoonJeong Jang [cathmjjang](https://github.com/cathmjjang)
+* [Game manipulation](https://github.com/son4673/pj5_team5/wiki)
 * Please post your [question](https://github.com/son4673/pj5_team5/issues/6).
