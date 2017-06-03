@@ -99,7 +99,7 @@ int GamePlay()
 		if (height % (3 * (speed * 2)) == 0) // Enemy_Fighter 초기화
 			Enemy_Fighter(enemy_life, enemy_x); 
 		if (height % (3 * (speed * 2)) == 0 && score >= 150 && score <= 200) // Enemy_Boss_Fighter 초기화
-			Enemy_Boss_Fighter(enemy_boss_life, enemy_boss_x);
+			Enemy_Boss_Fighter(enemy_boss_life);
 		if (height % (speed * 2) == 0) //  EnemyFighter_Move 초기화
 			EnemyFighter_Move(enemy_x, enemy_y, enemy_life);
 		if (height % (speed * 2) == 0 && score >= 150 && score <= 200) // Enemy_Boss_Fighter_Move 초기화
@@ -182,7 +182,7 @@ int GamePlay()
 				counts_shot = (counts_shot + 1) % NoMissile; // 몇 번째 미사일이 발사되었는지 계산하는 변수
 				break;
 			case 's': // 폭탄 투하
-				Bomb(enemy_life, enemy_x, enemy_y, missilex, missiley);
+				Bomb(enemy_life, enemy_x, enemy_y, missilex, missiley, enemy_boss_life);
 			default: // j, k, a가 아닌 키가 눌린 경우 fighter 정지
 				dx = 0;
 				break;
@@ -550,7 +550,7 @@ int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int mis
 			enemy_y[i] = 0;
 		} 
 
-		enemy_boss_life -= 50;
+		enemy_boss_life = 0;
 		if (enemy_boss_life == 0)
 		{
 			enemy_boss_draw = 0;
