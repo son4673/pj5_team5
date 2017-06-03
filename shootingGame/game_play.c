@@ -53,6 +53,7 @@ int enemy_draw = 0; // ÃÊ±â Àû °´Ã¼ °¹¼ö
 					// function definitions
 int GamePlay()
 {
+	srand((unsigned)time(NULL));
 
 	int i = 0;
 	char c = 0; // for keyboard hit
