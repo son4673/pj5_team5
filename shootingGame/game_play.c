@@ -185,22 +185,32 @@ int GamePlay()
 			else if (life == 2)
 				life--;
 			else if (life == 1) {
-				life--;
-				clrscr_center();
-				gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2);
-				printf(" G A M E O V E R ");
-				gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2 + 1);
-				system("PAUSE");
-				break;
+				{
+					life--;
+					clrscr_center();
+					gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2);
+					printf(" G A M E O V E R ");
+					gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2 + 1);
+					system("PAUSE");
+					coin = getch();
+					score = 0; // Score 리셋
+					life = 3, bomb = 3; //life 리셋
+					stage = 1; //stage 리셋
+					kx = 0, ky = 0;
+					speed = 7;//speed값 리셋
+					enemy_draw = 0; //적객체 갯수 리셋
+					break;
 			} // else if
 		} // if
-	} while (c != 27);
-	//WriteRanking(realscore);
+	} 
+	while (c != 27);
+	{
+		WriteRanking(realscore);
+	}
 	clrscr_center();
 	gotoxy(1, 1);
 	printf("Thank you for playing!!\n");
 	system("PAUSE");
-	return 0;
 }
 
 // DrawGameScreen function definition - 게임 스크린을 그리는 함수
