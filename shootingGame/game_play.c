@@ -438,14 +438,27 @@ int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int mis
 
 		//게임 세로창 
 		for (i = 1; i<GS_HEIGHT; i++) {
-			gotoxy(GS_WIDTH - 58, i);
-			putchar('*');
-
+			gotoxy(GS_WIDTH - 59, i);
+			putchar('l');
+		
 			//게임 가로창
-			for (j = 2; j<GS_WIDTH; j++) {
-				gotoxy(j, i);
-				putchar('*');
-			} //for 
+			for(j=2; j<=GS_WIDTH-50; j++){
+
+				gotoxy(j-1,0);
+				putchar(' ');
+				gotoxy(j,0);
+				putchar(' ');
+				gotoxy(j+1,0);
+				putchar('B');
+				gotoxy(j+2,0);
+				putchar('O');
+				gotoxy(j+3,0);
+				putchar('M');
+				gotoxy(j+4,0);
+				putchar('B');
+				
+			
+			}
 			Sleep(10); 
 		} // for
 		Sleep(100); 
