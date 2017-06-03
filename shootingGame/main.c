@@ -39,12 +39,11 @@ void ExitGame(); // 게임 종료 역할 수행
 				 //경계와 로고 그리기
 void DrawBoundary();
 void DrawLogo();
-//void CountRanking(); // 랭킹을 파일로부터 불러오는 역할 수행
 
 					 // main function
 int main()
 {
-	//CountRanking();
+	RankLoad();
 
 	while (1)
 	{
@@ -55,8 +54,8 @@ int main()
 			GamePlay();
 			return 0;
 		case '2': // Ranking 확인
-			//ViewRanking();
-			//break;
+			ViewRanking();
+			break;
 		case '3': // 도움말
 			HelpScreen();
 			break;
