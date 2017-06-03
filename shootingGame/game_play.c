@@ -34,22 +34,27 @@ void DrawGameScreen();
 void DrawStatus();
 void PrintStage();
 void Enemy_Fighter(int enemy_life[], int enemy_x[]);
+void Enemy_Boss_Fighter(int enemy_boss_life);
 void CountnDraw_Score(int realscore);
 void EnemyFighter_Move(int enemy_x[], int enemy_y[], int enemy_life[]);
+void Enemy_Boss_Fighter_Move(int enemy_boss_x, int enemy_boss_y, int enemy_boss_life);
 int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int enemy_life[]);
+int boss_check_shot(int enemy_boss_x, int enemy_boss_y, int missiley, int missilex, int enemy_boss_life);
 void CheckStage();
 int CheckDie(int enemy_x[], int enemy_y[], int enemy_life[]);
 void clrscr_center();
 //void WriteRanking(realscore);
-int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[]);
+int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[], int enemy_boss_life);
 
 // global variable
 int score = 0; // 초기 Score
 int life = 3, bomb = 3; // 초기 life 수, 초기 bomb 수
 int stage = 1; // 초기 stage
 int kx = 0, ky = 0; // missile x,y 좌표를 넣기 위한 변수
+int jx = 0, jy = 0; 
 int speed = 7; // 초기 적 객체 스피드. 스피드 작을 수록 빨라짐.
 int enemy_draw = 0; // 초기 적 객체 갯수
+int enemy_boss_draw = 0; // 초기 보스 객체 갯수
 
 					// function definitions
 int GamePlay()
@@ -71,6 +76,9 @@ int GamePlay()
 	int enemy_x[NoEnemy] = { 0 };
 	int enemy_y[NoEnemy] = { 2 };
 	int enemy_life[NoEnemy] = { 0 };
+	int enemy_boss_x = 25;
+	int enemy_boss_y = 2;
+	int enemy_boss_life = 50;
 	int realscore = 0; // score * 10
 	int height = 1; // for enemy 생성 속도 control
 
@@ -90,8 +98,12 @@ int GamePlay()
 		CountnDraw_Score(realscore);
 		if (height % (3 * (speed * 2)) == 0) // Enemy_Fighter 초기화
 			Enemy_Fighter(enemy_life, enemy_x); 
+		if (height % (3 * (speed * 2)) == 0 && score >= 150 && score <= 200) // Enemy_Boss_Fighter 초기화
+			Enemy_Boss_Fighter(enemy_boss_life, enemy_boss_x);
 		if (height % (speed * 2) == 0) //  EnemyFighter_Move 초기화
 			EnemyFighter_Move(enemy_x, enemy_y, enemy_life);
+		if (height % (speed * 2) == 0 && score >= 150 && score <= 200) // Enemy_Boss_Fighter_Move 초기화
+			Enemy_Boss_Fighter_Move(enemy_boss_x, enemy_boss_y, enemy_boss_life);
 
 		if ((height % 2000) == 0) {// Enemy 생성 속도가 2000이 될때
 			if (bomb == 3) //Bomb이 3개 일시 그대로  
@@ -119,6 +131,16 @@ int GamePlay()
 				gotoxy(kx, ky);
 				putchar(' ');
 				// missilex, y 초기화
+				missiley[i] = 0;
+				missilex[i] = 0;
+			} // if
+			if (boss_check_shot(enemy_boss_x, enemy_boss_y, missiley[i], missilex[i], enemy_boss_life)) {
+				score += 50;
+				gotoxy(jx, jy + 1);
+				putchar(' ');
+				gotoxy(jx, jy);
+				putchar(' ');
+				// missilex, missiley 초기화
 				missiley[i] = 0;
 				missilex[i] = 0;
 			} // if
@@ -324,6 +346,14 @@ void Enemy_Fighter(int enemy_life[], int enemy_x[])
 	} // for
 }
 
+// Enemy_Boss_Fighter function definition - 점수에 반영될 boss fighter의 갯수 증가해주는 함수 
+void Enemy_Boss_Fighter(int enemy_boss_life)
+{
+	if (enemy_boss_life != 0 && stage == 6) {
+		enemy_boss_draw = 1;
+	}
+}
+
 // EnemyFighter_Move function definition - 적 fighter 이동하는 함수
 void EnemyFighter_Move(int enemy_x[], int enemy_y[], int enemy_life[])
 {
@@ -341,19 +371,28 @@ void EnemyFighter_Move(int enemy_x[], int enemy_y[], int enemy_life[])
 
 }
 
+// Enemy_Boss_Fighter_Move function definition - 적 boss fighter 이동하는 함수
+void Enemy_Boss_Fighter_Move(int enemy_boss_x, int enemy_boss_y, int enemy_boss_life)
+{
+	if (enemy_boss_life != 0 && score >= 150 && score <= 200) { // 조건 - enemy boss의 life가 있고, 실제점수가 1500점에서 2000점 사이일 때
+		gotoxy(enemy_boss_x, enemy_boss_y);
+		printf("#^^^#");
+	}
+}
+
 // check_shot function definition - 적이 미사일에 맞았으면 1을 리턴하는 함수
 int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int enemy_life[])
 {
 	int j;
 	for (j = 0; j<NoEnemy; j++)
-		// 조건 - enemy의 life가 1이고, enemy의 y좌표와 missile의 y좌표가 같고, enemy의 x, x+1, x+2, x+3, x+4d의 좌표와 missile의 y좌표가 같을 때
+		// 조건 - enemy의 life가 1이고, enemy의 y좌표와 missile의 y좌표가 같고, enemy의 x, x+1, x+2, x+3, x+4의 좌표와 missile의 y좌표가 같을 때
 		if (missiley == enemy_y[j] && enemy_life[j] == 1 && (missilex == enemy_x[j] || missilex == enemy_x[j] + 1 || missilex == enemy_x[j] + 2 || missilex == enemy_x[j] + 3 || missilex == enemy_x[j] + 4)) {
 			gotoxy(enemy_x[j], enemy_y[j]);
 			printf("     ");
 			enemy_life[j] = 0;
 			enemy_x[j] = 0;
 			enemy_y[j] = 0;
-			enemy_draw--; // 적 비행기 사라짐
+			enemy_draw--; // 적 비행기 갯수 감소
 			kx = missilex; // kx 라는 변수에 현재 missilex 값을 대입한다.
 			ky = missiley; // ky 라는 변수에 현재 missiley 값을 대입한다.
 			return 1;
@@ -361,19 +400,42 @@ int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int ene
 	return 0;
 }
 
+// boss_check_shot function definition - boss가 미사일에 맞았으면 1을 리턴하는 함수
+int boss_check_shot(int enemy_boss_x, int enemy_boss_y, int missiley, int missilex, int enemy_boss_life)
+{
+	// 조건 boss enemy의 life가 0이 아니고, boss 객체의 y좌표와 미사일의 y좌표가 같고, boss 객체의 x, x+1, x+2, x+3, x+4의 좌표와 미사일의 y좌표가 같을 때
+	if (missiley == enemy_boss_y && enemy_boss_life != 0 && (missilex == enemy_boss_x || missilex == enemy_boss_x + 1 || missilex == enemy_boss_x + 2 || missilex == enemy_boss_x + 3 || missilex == enemy_boss_x + 4)) {
+		enemy_boss_life--; // boss 객체 life를 줄인다.
+		// 조건 boss enemy의 life가 1이고, boss 객체의 y좌표와 미사일의 y좌표가 같고, boss 객체의 x, x+1, x+2, x+3, x+4의 좌표와 미사일의 y좌표가 같을 때
+		if (missiley == enemy_boss_y && enemy_boss_life == 1 && (missilex == enemy_boss_x || missilex == enemy_boss_x + 1 || missilex == enemy_boss_x + 2 || missilex == enemy_boss_x + 3 || missilex == enemy_boss_x + 4))
+		{
+			gotoxy(enemy_boss_x, enemy_boss_y);
+			printf("     ");
+			enemy_boss_life = 0;
+			enemy_boss_x = 0;
+			enemy_boss_y = 0;
+			enemy_boss_draw--; // 보스 객체 갯수 감소
+			jx = missilex; // jx 라는 변수에 현재 missilex 값을 대입한다.
+			jy = missiley; // jy 라는 변수에 현재 missiley 값을 대입한다.
+			return 1;
+		}
+	}
+	return 0;
+}
+
 /* 단계(stage) 및 속도 조정 */
 void CheckStage()
 {
 	//score는 제거한 enemy의 수. (게임 실행 화면의 score(== realscore)가 아님)
-	if (score>10)
+	if (score>=10)
 		stage = 2;
-	if (score>30)
+	if (score>=30)
 		stage = 3;
-	if (score>60)
+	if (score>=60)
 		stage = 4;
-	if (score>100)
+	if (score>=100)
 		stage = 5;
-	if (score>150)
+	if (score>=150)
 		stage = 6;
 
 	//speed는 enemy가 내려오는 속도에 영향을 줌.
@@ -429,7 +491,7 @@ void clrscr_center()
 }
 
 // Bomb function definition - 폭탄 갯수 계산과 폭탄 사용시 적 비행기 없어지는 함수
-int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[])
+int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[] , int enemy_boss_life)
 {
 	int i, j;
 
@@ -479,13 +541,20 @@ int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int mis
 		} // for
 		Sleep(50); 
 		score += enemy_draw; // 폭탄 발사시 존재하는 enemy 수 만큼 점수 증가  
-		
+		score += enemy_boss_draw * 50; // 폭탄 발사시 존재하는 boss enemy 수*50 만큼 점수 증가
+
 		// 폭탄발사 후 존재하는 enemy값 초기화 
 		for (i = 0; i<NoEnemy; i++) {
 			enemy_life[i] = 0; // 
 			enemy_x[i] = 0;
 			enemy_y[i] = 0;
 		} 
+
+		enemy_boss_life -= 50;
+		if (enemy_boss_life == 0)
+		{
+			enemy_boss_draw = 0;
+		}
 
 		// 폭탄 발사 후 존재하는 미사일 값 초기화 
 		for (i = 0; i<NoMissile; i++) {
