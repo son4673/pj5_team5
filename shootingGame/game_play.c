@@ -184,7 +184,7 @@ int GamePlay()
 				life--;
 			else if (life == 2)
 				life--;
-			else if (life == 1) {
+			else if (life == 1)
 				{
 					life--;
 					clrscr_center();
@@ -192,7 +192,6 @@ int GamePlay()
 					printf(" G A M E O V E R ");
 					gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2 + 1);
 					system("PAUSE");
-					coin = getch();
 					score = 0; // Score 리셋
 					life = 3, bomb = 3; //life 리셋
 					stage = 1; //stage 리셋
@@ -204,9 +203,7 @@ int GamePlay()
 		} // if
 	} 
 	while (c != 27);
-	{
-		WriteRanking(realscore);
-	}
+		//WriteRanking(realscore);
 	clrscr_center();
 	gotoxy(1, 1);
 	printf("Thank you for playing!!\n");
