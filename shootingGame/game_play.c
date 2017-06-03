@@ -438,10 +438,19 @@ int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int mis
 
 	//폭탄이 0개일때 화면에 출력 후 일시정지
 	if (bomb == 0) {
-		gotoxy(GS_WIDTH + 2, 13);
+
+		//Status Screen에 출력 
+		gotoxy(GS_WIDTH+2, 13);
 		printf("NO BOMB AVAILABLE!");
-		Sleep(100);
-	} // if 
+		
+		//Game Main에 출력 
+		gotoxy(GS_WIDTH/2-7, 13);
+		printf("NO BOMB AVAILABLE!");
+		Sleep(800);
+		//Game Main에 초기화
+		gotoxy(GS_WIDTH/2-7, 13);
+		printf("                  ");
+	}  
 
 	//폭탄이 있을 경우 게임 모든 창에 미사일 출력 후 일시정지 
 	else {
