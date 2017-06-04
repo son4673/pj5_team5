@@ -77,12 +77,12 @@ int GamePlay()
 	int realscore = 0; // score * 10
 	int height = 1; // for enemy 생성 속도 control
 
-	clrscr();
+	system("cls");
 	DrawGameScreen();
 	gotoxy(20, 12);
 	printf("* G  A  M  E  S  T  A  R  T *");
 	Sleep(1000);
-	clrscr();
+	system("cls");
 
 	// do 루프 안에서는 실시간으로 연산을 계속 수행해야하는 함수들이 들어간다.
 	do {
