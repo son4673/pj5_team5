@@ -28,6 +28,9 @@ game_play.c: game playing functions
 #define NoMissile 23 // 미사일이 발사된 후 갈 수 있는 최대 y축으로의 범위 
 #define NoEnemy 9 // 한화면에 등장하는 최대 적 객체 수
 
+#define LEFT 75
+#define RIGHT 77
+
 // function declaration
 int GamePlay();
 void DrawGameScreen();
@@ -142,13 +145,13 @@ int GamePlay()
 		if (kbhit()) {
 			c = getch();
 			switch (c) {
-			case 'j': // 왼쪽으로 이동
+			case LEFT: // 왼쪽으로 이동
 				if (dx >= 0)
 					dx = -1;
 				else if (dx>-3)
 					dx--;
 				break;
-			case 'k': // 오른쪽으로 이동
+			case RIGHT: // 오른쪽으로 이동
 				if (dx <= 0)
 					dx = 1;
 				else if (dx<3)
