@@ -223,10 +223,10 @@ void DrawGameScreen()
 	//문자열 'ㅣ'로 게임 메인틀 만들기
 	for (i = 1; i <= GS_HEIGHT - 1; i++) {
 		gotoxy(1, i); 
-		putchar('|');
+		putchar('<');
 
 		gotoxy(GS_WIDTH, i); 
-		putchar('|');
+		putchar('>');
 	} // for
 }
 
