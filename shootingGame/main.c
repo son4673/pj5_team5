@@ -72,7 +72,7 @@ int main()
 int StartMenu(char selection) // Menu
 {
 	do {
-		clrscr();
+		system("cls");
 		DrawBoundary();
 		DrawLogo();
 		gotoxy(10, 5);
