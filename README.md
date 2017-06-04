@@ -21,7 +21,7 @@ notgame.c
  
 ### 설치하기
  
-visual studio 2015/2010에서 실행을 시켜야합니다.
+visual studio 2015/2017에서 실행을 시켜야합니다.
 
 ## 버그
  
@@ -81,7 +81,7 @@ notgame.c
  
 ### Installing
  
-You need to run it in visual studio 2015/2010.
+You need to run it in visual studio 2015/2017.
  
 ## Bugs
  
