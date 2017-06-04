@@ -106,10 +106,6 @@ void RankLoad(void)
 /* 랭킹 그리기 - 출력*/
 void RankDetailDraw()
 {
-	gotoxy(40, 30);
-	printf("중간");
-	gotoxy(82, 30);
-	printf("끝");
 	gotoxy(22, 2);
 	printf("****************** Ranking ******************");
 	gotoxy(4, 4);
