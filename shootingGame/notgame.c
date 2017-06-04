@@ -27,7 +27,7 @@ void DrawLogo()
 void DrawBoundary()
 {
 	int i=0;
-	clrscr();
+	system("cls");
 	gotoxy(1,1);
 	for(i=0; i<ScreenWidth; i++)
 		putchar('#');
@@ -43,7 +43,7 @@ void DrawBoundary()
 }
 void HelpScreen() // 도움말
 {
-	clrscr();
+	system("cls");
 	DrawBoundary();
 	DrawLogo();
 	gotoxy(10,5);
@@ -65,7 +65,7 @@ void HelpScreen() // 도움말
 }
 void ExitGame() // 게임 종료
 {
-	clrscr();
+	system("cls");
 	printf("STRIKERS 1945 C-Programming Version.\n");
 	printf("Made by Sung-Hyun, Lee\n\n");
 	printf("e-mail: caleb-@hanmail.net\n");

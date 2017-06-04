@@ -23,7 +23,7 @@ game_play.c: game playing functions
 #define LeftBound 1 // Left boundary
 #define RightBound 60 // Right boundary
 
-#define FighterWidth 5 // Fighters length
+#define FighterWidth 6 // Fighters length
 
 #define NoMissile 23 // 미사일이 발사된 후 갈 수 있는 최대 y축으로의 범위 
 #define NoEnemy 9 // 한화면에 등장하는 최대 적 객체 수
@@ -77,12 +77,12 @@ int GamePlay()
 	int realscore = 0; // score * 10
 	int height = 1; // for enemy 생성 속도 control
 
-	clrscr();
+	system("cls");
 	DrawGameScreen();
 	gotoxy(20, 12);
 	printf("* G  A  M  E  S  T  A  R  T *");
 	Sleep(1000);
-	clrscr();
+	system("cls");
 
 	// do 루프 안에서는 실시간으로 연산을 계속 수행해야하는 함수들이 들어간다.
 	do {
@@ -109,7 +109,7 @@ int GamePlay()
 				printf("  ");
 			// draw new bar;
 			gotoxy(x, y);
-			printf("<-A->");
+			printf("─▲─");
 			oldx = x;
 		} // if
 		Sleep(50);
@@ -159,7 +159,7 @@ int GamePlay()
 				break;
 			case 'a': // 미사일 발사
 				missiley[counts_shot] = 23; // 미사일 초기 y값
-				missilex[counts_shot] = x + 2; // 미사일 초기 x값
+				missilex[counts_shot] = x + 3; // 미사일 초기 x값
 				counts_shot = (counts_shot + 1) % NoMissile; // 몇 번째 미사일이 발사되었는지 계산하는 변수
 				break;
 			case 's': // 폭탄 투하
@@ -223,10 +223,10 @@ void DrawGameScreen()
 	//문자열 'ㅣ'로 게임 메인틀 만들기
 	for (i = 1; i <= GS_HEIGHT - 1; i++) {
 		gotoxy(1, i); 
-		putchar('|');
+		putchar('<');
 
 		gotoxy(GS_WIDTH, i); 
-		putchar('|');
+		putchar('>');
 	} // for
 }
 
@@ -272,19 +272,19 @@ void DrawStatus(int life)
 		printf("                  ");
 
 	//Life 출력
-	gotoxy(GS_WIDTH + 3, 17);
+	gotoxy(GS_WIDTH + 3, 16);
 	printf("Life:");
-	gotoxy(GS_WIDTH + 2, 18);
+	gotoxy(GS_WIDTH + 3, 17);
 
 	//Life 3개 일때 남은 생명수 표시
 	if (life == 3)
-		printf("<-A-> <-A->");
+		printf("─▲─ ─▲─");
 
 	//Life 2개 일때 남은 생명수 표시 						   
 	else if (life == 2) {
 		printf("           ");
-		gotoxy(GS_WIDTH + 2, 18);
-		printf("<-A->");
+		gotoxy(GS_WIDTH + 3, 17);
+		printf("─▲─");
 	}
 
 	else if (life == 1)
