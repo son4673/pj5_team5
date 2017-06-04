@@ -11,21 +11,12 @@
 // define constant value
 #define ScreenWidth 80
 #define ScreenHeight 24 
-// global variable
-extern char first_name[3];
-extern char second_name[3];
-extern char third_name[3]; // 랭킹의 1, 2, 3등의 이름
-extern int first_score;
-extern int second_score;
-extern int third_score;
-extern int highest; // 랭킹의 1, 2, 3등, 최고 점수
 
 // function declaration
 void DrawLogo();
 void DrawBoundary();
 void HelpScreen(); // 도움말
 void ExitGame(); // 게임 종료
-void ViewRanking(); // 랭킹 보기
 
 // function definition
 void DrawLogo()
@@ -78,25 +69,4 @@ void ExitGame() // 게임 종료
 	printf("STRIKERS 1945 C-Programming Version.\n");
 	printf("Made by Sung-Hyun, Lee\n\n");
 	printf("e-mail: caleb-@hanmail.net\n");
-}
-
-/* 1,2,3위 랭킹 출력 */
-void ViewRanking()
-{
-	clrscr();			// 화면 지우기
-	DrawBoundary();		// 화면에 외곽선 출력
-	DrawLogo();			// 화면에 로고 출력
-
-	gotoxy(5, 8);
-	printf("\tRANKING:");
-
-	// 화면에 이름과 점수를 출력
-	gotoxy(5, 10);
-	printf("  1. %s  %d", first_name, first_score);
-	gotoxy(5, 11);
-	printf("  2. %s  %d", second_name, second_score);
-	gotoxy(5, 12);
-	printf("  3. %s  %d", third_name, third_score);
-	gotoxy(5, 15);
-	system("PAUSE");
 }

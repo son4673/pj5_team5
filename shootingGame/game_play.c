@@ -28,6 +28,9 @@ game_play.c: game playing functions
 #define NoMissile 23 // 미사일이 발사된 후 갈 수 있는 최대 y축으로의 범위 
 #define NoEnemy 9 // 한화면에 등장하는 최대 적 객체 수
 
+#define LEFT 75
+#define RIGHT 77
+
 // function declaration
 int GamePlay();
 void DrawGameScreen();
@@ -40,16 +43,9 @@ int check_shot(int enemy_x[], int enemy_y[], int missiley, int missilex, int ene
 void CheckStage();
 int CheckDie(int enemy_x[], int enemy_y[], int enemy_life[]);
 void clrscr_center();
-void WriteRanking(realscore);
 int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[]);
 
 // global variable
-extern char first_name[3];
-extern char second_name[3];
-extern char third_name[3]; // 랭킹의 1, 2, 3등의 이름
-extern int first_score;
-extern int second_score;
-extern int third_score; // 랭킹의 1, 2, 3등의 점수
 int score = 0; // 초기 Score
 int life = 3, bomb = 3; // 초기 life 수, 초기 bomb 수
 int stage = 1; // 초기 stage
@@ -60,6 +56,7 @@ int enemy_draw = 0; // 초기 적 객체 갯수
 					// function definitions
 int GamePlay()
 {
+	srand((unsigned)time(NULL));
 
 	int i = 0;
 	char c = 0; // for keyboard hit
@@ -148,13 +145,13 @@ int GamePlay()
 		if (kbhit()) {
 			c = getch();
 			switch (c) {
-			case 'j': // 왼쪽으로 이동
+			case LEFT: // 왼쪽으로 이동
 				if (dx >= 0)
 					dx = -1;
 				else if (dx>-3)
 					dx--;
 				break;
-			case 'k': // 오른쪽으로 이동
+			case RIGHT: // 오른쪽으로 이동
 				if (dx <= 0)
 					dx = 1;
 				else if (dx<3)
@@ -190,23 +187,31 @@ int GamePlay()
 				life--;
 			else if (life == 2)
 				life--;
-			else if (life == 1) {
-				life--;
-				clrscr_center();
-				gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2);
-				printf(" G A M E O V E R ");
-				gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2 + 1);
-				system("PAUSE");
-				break;
+			else if (life == 1)
+				{
+					life--;
+					clrscr_center();
+					gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2);
+					printf(" G A M E O V E R ");
+					gotoxy(GS_WIDTH / 2 - 8, GS_HEIGHT / 2 + 1);
+					system("PAUSE");
+					score = 0; // Score 리셋
+					life = 3, bomb = 3; //life 리셋
+					stage = 1; //stage 리셋
+					kx = 0, ky = 0;
+					speed = 7;//speed값 리셋
+					enemy_draw = 0; //적객체 갯수 리셋
+					break;
 			} // else if
 		} // if
 	} while (c != 27);
-	WriteRanking(realscore);
+
+	WriteRank(realscore);
+
 	clrscr_center();
 	gotoxy(1, 1);
 	printf("Thank you for playing!!\n");
 	system("PAUSE");
-	return 0;
 }
 
 // DrawGameScreen function definition - 게임 스크린을 그리는 함수
@@ -232,16 +237,6 @@ void DrawStatus(int life)
 	//Score 출력 
 	gotoxy(GS_WIDTH + 3, 3);
 	printf("SCORE");
-
-	//Ranking,1등 2등 3등 이름과 점수 출력
-	gotoxy(GS_WIDTH + 3, 7);
-	printf("Ranking");
-	gotoxy(GS_WIDTH + 4, 8);
-	printf("1. %s %d", first_name, first_score);
-	gotoxy(GS_WIDTH + 4, 9);
-	printf("2. %s %d", second_name, second_score);
-	gotoxy(GS_WIDTH + 4, 10);
-	printf("3. %s %d", third_name, third_score);
 
 	//Bomb 출력
 	gotoxy(GS_WIDTH + 3, 12);
@@ -283,7 +278,7 @@ void DrawStatus(int life)
 
 	//Life 3개 일때 남은 생명수 표시
 	if (life == 3)
-		printf("<-A-> <-A->");  /
+		printf("<-A-> <-A->");
 
 	//Life 2개 일때 남은 생명수 표시 						   
 	else if (life == 2) {
@@ -292,7 +287,6 @@ void DrawStatus(int life)
 		printf("<-A->");
 	}
 
-	
 	else if (life == 1)
 		printf("           ");
 
@@ -438,88 +432,6 @@ void clrscr_center()
 	}
 }
 
-/* 점수를 기존 1, 2, 3 등과 비교하여 파일에 기록 */
-void WriteRanking(realscore)
-{
-	FILE *rank = NULL;				// FILE형 포인트 변수인 rank 선언
-
-	int i = 0;						// 파일 기록 조건 확인을 위한 변수
-
-									// 3등 결정 ( 점수가 기존 3등 점수보다 큰 경우와 동시에 2등 점수보다 작은 경우 )
-	if (realscore>third_score && realscore<second_score) {
-
-		clrscr();
-		gotoxy(1, 1);
-
-		third_score = realscore;		// 점수가 3등의 점수로 저장 됨
-
-		printf("3등을 기록하셨습니다! 축하드립니다.\n");
-		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
-		scanf("%s", third_name);
-
-		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 0 ->1 )
-	}
-
-	// 2등 결정 ( 점수가 기존 2등 점수보다 큰 경우와 동시에 1등 점수보다 작은 경우 )
-	else if (realscore>second_score && realscore<first_score) {
-
-		clrscr();
-		gotoxy(1, 1);
-
-		// 현재 점수 -> 2등 , 기존 2등 -> 3등
-		// 기존 3등의 이름을 기존 2등의 이름으로 변경
-		for (i = 0; i<3; i++)
-			third_name[3] = second_name[3];
-
-		third_score = second_score;	// 3등의 점수를 기존 2등의 점수로 변경
-		second_score = realscore;		// 점수가 2등의 점수로 저장 됨
-
-		printf("2등을 기록하셨습니다! 축하드립니다.\n");
-		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
-		scanf("%s", second_name);
-
-		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 3 ->1 )
-	}
-
-	// 1등 결정 ( 점수가 기존 1등 점수보다 큰 경우)
-	else if (realscore>first_score) {
-
-		clrscr();
-		gotoxy(1, 1);
-
-		// 현재 점수 -> 1등, 기존 1등 -> 2등, 기존 2등 -> 3등
-		// 기존 2등(3등)의 이름을 기존 1등(2등)의 이름으로 변경
-		for (i = 0; i<3; i++) {
-			third_name[i] = second_name[i];
-			second_name[i] = first_name[i];
-		}
-
-		third_score = second_score;	// 3등의 점수를 기존 2등의 점수로 변경
-		second_score = first_score;	// 2등의 점수를 기존 1등의 점수로 변경
-		first_score = realscore;		// 점수가 1등의 점수로 저장 됨
-
-		printf("1등을 기록하셨습니다! 축하드립니다.\n");
-		printf("이니셜을 입력해주세요 (알파벳 세 자리): ");
-		scanf("%s", first_name);
-
-		i = 1;						// 파일 기록 조건에 해당 하도록 변경 ( 0 ->1 )
-	}
-
-	// 랭킹 파일에 데이터 기록
-	if (i == 1) {						// i==0 인 경우는 랭킹에 들지 못한 경우이므로 기록을 하지 않음
-
-		if ((rank = fopen("1945rk.dat", "w")) == NULL)
-			printf("Error to open ranking file!");
-
-		// 이름과 점수 데이터를 rank가 지칭하는 파일에 출력(저장)
-		fprintf(rank, "%s %d ", first_name, first_score);
-		fprintf(rank, "%s %d ", second_name, second_score);
-		fprintf(rank, "%s %d ", third_name, third_score);
-		printf("랭킹 파일에 기록되었습니다. 메인 화면으로 이동합니다.\n");
-
-	}
-}
-
 // Bomb function definition - 폭탄 갯수 계산과 폭탄 사용시 적 비행기 없어지는 함수
 int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int missiley[])
 {
@@ -527,27 +439,49 @@ int Bomb(int enemy_life[], int enemy_x[], int enemy_y[], int missilex[], int mis
 
 	//폭탄이 0개일때 화면에 출력 후 일시정지
 	if (bomb == 0) {
-		gotoxy(GS_WIDTH + 2, 13);
+
+		//Status Screen에 출력 
+		gotoxy(GS_WIDTH+2, 13);
 		printf("NO BOMB AVAILABLE!");
-		Sleep(100);
-	} // if 
+		
+		//Game Main에 출력 
+		gotoxy(GS_WIDTH/2-7, 13);
+		printf("NO BOMB AVAILABLE!");
+		Sleep(800);
+		//Game Main에 초기화
+		gotoxy(GS_WIDTH/2-7, 13);
+		printf("                  ");
+	}  
 
 	//폭탄이 있을 경우 게임 모든 창에 미사일 출력 후 일시정지 
 	else {
 
 		//게임 세로창 
 		for (i = 1; i<GS_HEIGHT; i++) {
-			gotoxy(GS_WIDTH - 58, i);
-			putchar('*');
-
+			gotoxy(GS_WIDTH - 59, i);
+			putchar('l');
+		
 			//게임 가로창
-			for (j = 2; j<GS_WIDTH; j++) {
-				gotoxy(j, i);
-				putchar('*');
-			} //for 
+			for(j=2; j<=GS_WIDTH-50; j++){
+
+				gotoxy(j-1,0);
+				putchar(' ');
+				gotoxy(j,0);
+				putchar(' ');
+				gotoxy(j+1,0);
+				putchar('B');
+				gotoxy(j+2,0);
+				putchar('O');
+				gotoxy(j+3,0);
+				putchar('M');
+				gotoxy(j+4,0);
+				putchar('B');
+				
+			
+			}
 			Sleep(10); 
 		} // for
-		Sleep(100); 
+		Sleep(50); 
 		score += enemy_draw; // 폭탄 발사시 존재하는 enemy 수 만큼 점수 증가  
 		
 		// 폭탄발사 후 존재하는 enemy값 초기화 
