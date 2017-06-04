@@ -1,0 +1,28 @@
+History File
+
+#Version 1.0
+Original Shooting Game by Sung Hyeon Lee.
+
+#Version 2.0
+Add comments about game_play.c functions.
+-algorithm.
+-funcs.
+-main.
+-del.
+-rank.
+-enemy.
+
+#Version 3.0
+Add Shooting game's function.
+-Bomb's shape change.
+-Algorithm change.
+-Keydata change.
+-Show Ranking to 16th
+-Init ranking by entering key 'D/d'
+
+#Version 4.0
+Edit Shooting game's UI.
+-Change charater
+-Change Life UI and location
+-Change Game Main shape
+-Game main erase clearly
