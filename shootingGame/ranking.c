@@ -4,11 +4,9 @@
 
 #include "Console.h"
 
-#define clrscr() system("cls")
 #define ESC 27
 #define D 68
 #define d 100
-
 
 struct data {
 
@@ -19,7 +17,7 @@ struct data {
 
 struct data rank[17];	// data구조체 17개로 구성된 배열
 
-						/* 파일에 기록 저장 */
+/* 파일에 기록 저장 */
 void FileSave(void)
 {
 	FILE *rankfile;
@@ -108,6 +106,20 @@ void RankLoad(void)
 /* 랭킹 그리기 - 출력*/
 void RankDetailDraw()
 {
+	gotoxy(22, 2);
+	printf("****************** Ranking ******************");
+	gotoxy(4, 4);
+	printf("순위");
+	gotoxy(19, 4);
+	printf("이름");
+	gotoxy(35, 4);
+	printf("점수");
+	gotoxy(47, 4);
+	printf("순위");
+	gotoxy(62, 4);
+	printf("이름");
+	gotoxy(78, 4);
+	printf("점수");
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -137,7 +149,7 @@ void RankDetailDraw()
 /* 랭킹 그리기 */
 void ViewRanking(void)
 {
-	clrscr();
+	system("cls");
 	RankLoad();
 	RankSort();
 
